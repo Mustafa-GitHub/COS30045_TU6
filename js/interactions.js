@@ -1,8 +1,12 @@
 const populateFilters = (data) => {
-	const updateHistogram = (filterId, data) => {
-		const filteredData = filterId === "all"
-			? data
-			: data.filter(d => d.screenTech === filterId);
+	let currentTech = filters_screen.find(filter => filter.isActive).id;
+	let currentSize = filters_size.find(filter => filter.isActive).id;
+
+	const updateHistogram = () => {
+		const filteredData = data.filter(d =>
+			(currentTech === "all" || d.screenTech === currentTech) &&
+			(currentSize === "all" || d.screenSize === currentSize)
+		);
 		const bins = binGenerator(filteredData);
 
 		d3.select("#histogram")
@@ -15,7 +19,7 @@ const populateFilters = (data) => {
 			.attr("height", d => innerHeight - yScale(d.length));
 	};
 
-	const buttons = d3.select("#filters_screen")
+	const techButtons = d3.select("#filters_screen")
 		.selectAll("button")
 		.data(filters_screen)
 		.join("button")
@@ -25,11 +29,31 @@ const populateFilters = (data) => {
 		.on("click", (event, d) => {
 			if (d.isActive) return;
 
+			currentTech = d.id;
 			filters_screen.forEach(filter => {
 				filter.isActive = filter.id === d.id;
 			});
 
-			buttons.classed("active", filter => filter.isActive);
-			updateHistogram(d.id, data);
+			techButtons.classed("active", filter => filter.isActive);
+			updateHistogram();
+		});
+
+	const sizeButtons = d3.select("#filters_size")
+		.selectAll("button")
+		.data(filters_size)
+		.join("button")
+		.attr("class", "filter")
+		.classed("active", d => d.isActive)
+		.text(d => d.label)
+		.on("click", (event, d) => {
+			if (d.isActive) return;
+
+			currentSize = d.id;
+			filters_size.forEach(filter => {
+				filter.isActive = filter.id === d.id;
+			});
+
+			sizeButtons.classed("active", filter => filter.isActive);
+			updateHistogram();
 		});
 };

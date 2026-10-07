@@ -54,10 +54,12 @@ h3{ font-size:18px; }
 p{ margin:0 0 16px 0; color: #3f2f28; }
 
 /* Filters/buttons */
-#filters_screen{ display:flex; gap:12px; flex-wrap:wrap; margin:14px 0 18px 0; }
+#filters_screen,
+#filters_size{ display:flex; gap:12px; flex-wrap:wrap; margin:14px 0 18px 0; }
 
 /* Filter buttons — use classes so we can toggle active state */
-#filters_screen .filter{
+#filters_screen .filter,
+#filters_size .filter{
   border: none;
   background: var(--accent); /* dark orange by default */
   color: white;
@@ -69,12 +71,14 @@ p{ margin:0 0 16px 0; color: #3f2f28; }
 }
 
 /* Active filter: pale background, dark text */
-#filters_screen .filter.active{
+#filters_screen .filter.active,
+#filters_size .filter.active{
   background: #f3d9b9; /* pale/light orange */
   color: var(--text);
 }
 
-#filters_screen .filter:focus{ outline:2px solid rgba(0,0,0,0.08); }
+#filters_screen .filter:focus,
+#filters_size .filter:focus{ outline:2px solid rgba(0,0,0,0.08); }
 
 /* Chart container - keep a little spacing */
 .responsive-svg-container{
