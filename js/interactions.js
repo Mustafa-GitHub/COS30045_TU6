@@ -90,7 +90,7 @@ const handleMouseEvents = () => {
 			const text = tooltip.select("text")
 				.text(null)
 				.attr("x", 6)
-				.attr("y", 6)
+				.attr("y", 24)
 				.attr("text-anchor", "start")
 				.attr("alignment-baseline", "hanging");
 
@@ -98,7 +98,7 @@ const handleMouseEvents = () => {
 				.data([d.brand, d.model, d.screenSize + '"'])
 				.join("tspan")
 				.attr("x", 6)
-				.attr("dy", (line, index) => index === 0 ? 0 : "1.2em")
+				.attr("dy", (line, index) => index === 0 ? 0 : "1.5em")
 				.text(line => line);
 
 			const textBounds = text.node().getBBox();
