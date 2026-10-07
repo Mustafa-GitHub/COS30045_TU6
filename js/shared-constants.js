@@ -45,3 +45,19 @@ const filters_size = [
 	{ id: 65, label: '65"', isActive: false },
 	{ id: 98, label: '98"', isActive: false }
 ];
+
+// Container for the scatterplot's translated inner chart.
+let innerChartS;
+
+// Width reserved for scatterplot tooltips.
+const tooltipWidth = 65;
+// Height reserved for scatterplot tooltips.
+const tooltipHeight = 32;
+
+// Linear scale for the scatterplot's horizontal axis.
+const xScaleS = d3.scaleLinear();
+// Linear scale for the scatterplot's vertical axis.
+const yScaleS = d3.scaleLinear();
+
+// Ordinal color scale for screen technologies.
+const colorScale = d3.scaleOrdinal();
