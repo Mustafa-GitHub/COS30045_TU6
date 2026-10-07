@@ -1,0 +1,16 @@
+.responsive-svg-container {
+  width: 100%;
+  max-width: 1000px;
+}
+
+.axis-label {
+  font-family: Roboto, sans-serif;
+  font-size: 14px;
+  fill: #5a3e2b;
+}
+
+@media (max-width: 595px) {
+  .responsive-svg-container {
+    margin-bottom: 20px;
+  }
+}
