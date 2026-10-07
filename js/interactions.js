@@ -86,13 +86,34 @@ const handleMouseEvents = () => {
 	innerChartS.selectAll("circle")
 		.on("mouseenter", (e, d) => {
 			console.log(d);
-			innerChartS.select(".tooltip text")
-				.text(d.screenSize + '"');
+			const tooltip = innerChartS.select(".tooltip");
+			const text = tooltip.select("text")
+				.text(null)
+				.attr("x", 6)
+				.attr("y", 6)
+				.attr("text-anchor", "start")
+				.attr("alignment-baseline", "hanging");
+
+			text.selectAll("tspan")
+				.data([d.brand, d.model, d.screenSize + '"'])
+				.join("tspan")
+				.attr("x", 6)
+				.attr("dy", (line, index) => index === 0 ? 0 : "1.2em")
+				.text(line => line);
+
+			const textBounds = text.node().getBBox();
+			const boxWidth = Math.max(tooltipWidth, Math.ceil(textBounds.width + 12));
+			const boxHeight = Math.max(tooltipHeight, Math.ceil(textBounds.height + 12));
+			tooltip.select("rect")
+				.attr("width", boxWidth)
+				.attr("height", boxHeight);
 
 			const cx = Number(e.target.getAttribute("cx"));
 			const cy = Number(e.target.getAttribute("cy"));
-			innerChartS.select(".tooltip")
-				.attr("transform", `translate(${cx - 0.5 * tooltipWidth},${cy - 1.5 * tooltipHeight})`)
+			const x = Math.max(0, Math.min(cx - boxWidth / 2, innerWidth - boxWidth));
+			const y = Math.max(0, Math.min(cy - 1.5 * boxHeight, innerHeight - boxHeight));
+			tooltip
+				.attr("transform", `translate(${x},${y})`)
 				.transition()
 				.duration(200)
 				.style("opacity", 1);
